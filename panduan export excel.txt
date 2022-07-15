@@ -1,0 +1,33 @@
+export excel:
+
+instalasi:
+1. jalankan command "composer require maatwebsite/excel"
+note : [ketika menjalankan command tsb. terdapat error maka jalankan command "composer require psr/simple-cache:^2.0 maatwebsite/excel" ] (If composer require fails on Laravel 9)
+
+2. registrasikan service provider di file config/app.php
+[Maatwebsite\Excel\ExcelServiceProvider::class,]
+
+3. buat sebuah alias
+['Excel' => Maatwebsite\Excel\Facades\Excel::class,]
+
+4. publish config dengan menjalankan command berikut
+[php artisan vendor:publish --provider="Maatwebsite\Excel\ExcelServiceProvider" --tag=config]
+
+export:
+1. untuk membuat perintah export, pertama jalankan command berikut
+[php artisan make:export .... --model=....] 
+note : [file terdapat pada folder App\Exports\....]
+
+2. return model yang ingin di export
+[return User::all();]
+note: [return di file yg kita buat tadi (app\exports\....)]
+
+3. di controller buat sebuah method function export, isi function sebagai berikut.
+[return Excel::download(new ...., 'users.xlsx');]
+note: [new .... (menunjuk pada file export yg kita buat tadi app\exports\...)
+
+4. buat sebuah route untuk memanggil function exportnya
+
+5. di view tinggal panggil route-nya
+
+selesai...
